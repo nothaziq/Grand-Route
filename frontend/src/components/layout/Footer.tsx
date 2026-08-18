@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { Container } from "../common/Container";
 import { services } from "../../data/services";
 import { company } from "../../data/company";
+import logo from "../../assets/logo.png";
 
 const NAV_LINKS = [
   { label: "Services", to: "/services" },
@@ -22,9 +23,7 @@ export function Footer() {
       <Container className="grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <div className="lg:col-span-1">
           <Link to="/" className="flex items-center gap-2.5" aria-label="Grand Route — home">
-            <span className="flex size-9 items-center justify-center border border-grp-green text-sm font-bold font-display text-grp-green">
-              GR
-            </span>
+            <img src={logo} alt="Grand Route" className="h-9 w-auto" />
             <span className="font-display text-sm font-semibold uppercase tracking-[0.14em]">
               Grand Route
             </span>

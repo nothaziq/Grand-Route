@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Container } from "../common/Container";
 import { Button } from "../common/Button";
 import { cn } from "../../lib/cn";
+import logo from "../../assets/logo.png";
 
 const NAV_LINKS = [
   { label: "Services", to: "/services" },
@@ -54,9 +55,7 @@ export function Navbar() {
       >
         <Container className="flex h-20 items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5" aria-label="Grand Route — home">
-            <span className="flex size-9 items-center justify-center border border-grp-green text-sm font-bold font-display text-grp-green">
-              GR
-            </span>
+            <img src={logo} alt="Grand Route" className="h-9 w-auto" />
             <span className="hidden font-display text-sm font-semibold uppercase tracking-[0.14em] text-off-white sm:inline">
               Grand Route
             </span>

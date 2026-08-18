@@ -32,14 +32,14 @@ export function ContactCta({ layout = "grid" }: { layout?: "grid" | "stack" }) {
           href={method.href}
           target={method.external ? "_blank" : undefined}
           rel={method.external ? "noopener noreferrer" : undefined}
-          className="manifest-corners group flex flex-col gap-4 border border-hairline p-6 transition-colors hover:border-grp-green/50"
+          className="manifest-corners group flex min-w-0 flex-col gap-4 border border-hairline p-6 transition-colors hover:border-grp-green/50"
         >
           <method.icon className="size-5 text-grp-green" aria-hidden="true" />
-          <div>
+          <div className="min-w-0">
             <div className="font-body text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
               {method.label}
             </div>
-            <div className="mt-1 font-display text-base font-semibold text-ink group-hover:text-grp-green">
+            <div className="mt-1 break-words font-display text-base font-semibold text-ink group-hover:text-grp-green">
               {method.value}
             </div>
           </div>
