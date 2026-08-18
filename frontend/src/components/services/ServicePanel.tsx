@@ -19,11 +19,22 @@ export function ServicePanel({ service, reversed = false }: ServicePanelProps) {
       )}
     >
       <div className={cn("md:col-span-6", reversed && "md:order-2")}>
-        <PlaceholderImage
-          label={`${service.title} — GRP`}
-          aspect="aspect-[4/3]"
-          className="transition-transform duration-500 ease-[var(--ease-grp)] group-hover:scale-[1.02]"
-        />
+        {service.image ? (
+          <div className="aspect-[4/3] w-full overflow-hidden border border-hairline bg-light-gray transition-shadow duration-300 group-hover:shadow-lg">
+            <img
+              src={service.image}
+              alt={service.title}
+              className="h-full w-full object-cover transition-transform duration-500 ease-[var(--ease-grp)] group-hover:scale-[1.05]"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          <PlaceholderImage
+            label={`${service.title} — GRP`}
+            aspect="aspect-[4/3]"
+            className="transition-transform duration-500 ease-[var(--ease-grp)] group-hover:scale-[1.02]"
+          />
+        )}
       </div>
       <div className={cn("md:col-span-6", reversed && "md:order-1")}>
         <span className="font-display text-sm font-semibold text-grp-green">{service.number}</span>

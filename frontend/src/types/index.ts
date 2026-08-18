@@ -34,6 +34,7 @@ export interface Capability {
   title: string;
   summary: string;
   serviceSlugs: ServiceSlug[];
+  image?: string;
 }
 
 export type ServiceSlug =
@@ -53,6 +54,7 @@ export interface Service {
   applications: string[];
   capability: CapabilityId;
   relatedSlugs: ServiceSlug[];
+  image?: string;
 }
 
 export interface FleetItem {
@@ -68,6 +70,7 @@ export interface FleetCategory {
   id: string;
   title: string;
   description: string;
+  image?: string;
 }
 
 export interface Industry {

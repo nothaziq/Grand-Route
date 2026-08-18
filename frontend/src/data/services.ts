@@ -14,6 +14,7 @@ export const capabilities: Capability[] = [
     title: "Maintenance",
     summary: "Keeping buildings and electromechanical systems running.",
     serviceSlugs: ["building-maintenance", "electromechanical"],
+    image: "/images/projects/villa-flooring-paving/floor-01.jpg",
   },
   {
     id: "equipment",
@@ -21,6 +22,7 @@ export const capabilities: Capability[] = [
     title: "Equipment",
     summary: "Heavy machinery and equipment available for rental.",
     serviceSlugs: ["heavy-equipment"],
+    image: "/images/fleet/backhoe-loader-3cx.jpg",
   },
 ];
 
@@ -72,6 +74,7 @@ export const services: Service[] = [
     ],
     capability: "maintenance",
     relatedSlugs: ["electromechanical", "passenger-transport"],
+    image: "/images/projects/villa-flooring-paving/floor-03.jpg",
   },
   {
     slug: "electromechanical",
@@ -88,6 +91,7 @@ export const services: Service[] = [
     ],
     capability: "maintenance",
     relatedSlugs: ["building-maintenance", "heavy-equipment"],
+    image: "/images/projects/ductwork-installation/duct-02.jpg",
   },
   {
     slug: "heavy-equipment",
@@ -104,6 +108,7 @@ export const services: Service[] = [
     ],
     capability: "equipment",
     relatedSlugs: ["material-transport", "electromechanical"],
+    image: "/images/fleet/skid-steer-loader.jpg",
   },
 ];
 

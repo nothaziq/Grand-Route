@@ -2,7 +2,6 @@ import { useSeo } from "../hooks/useSeo";
 import { PageHeader } from "../components/common/PageHeader";
 import { Container } from "../components/common/Container";
 import { Reveal } from "../components/common/Reveal";
-import { PlaceholderImage } from "../components/common/PlaceholderImage";
 import { Button } from "../components/common/Button";
 import { LeadershipContacts } from "../components/common/LeadershipContacts";
 import { company, companySnapshot } from "../data/company";
@@ -88,7 +87,14 @@ export function AboutPage() {
 
             <div className="lg:col-span-5">
               <Reveal delay={0.05}>
-                <PlaceholderImage label="Grand Route team, Musaffah" aspect="aspect-[4/5]" />
+                <div className="aspect-[4/5] w-full overflow-hidden border border-hairline bg-light-gray">
+                  <img
+                    src="/images/projects/villa-flooring-paving/floor-02.jpg"
+                    alt="Grand Route site work, Abu Dhabi"
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
               </Reveal>
 
               <Reveal delay={0.1} className="mt-8 border border-hairline p-6">

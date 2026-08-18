@@ -1,7 +1,6 @@
 import { motion, useReducedMotion, type Easing } from "motion/react";
 import { Container } from "../common/Container";
 import { Button } from "../common/Button";
-import { PlaceholderImage } from "../common/PlaceholderImage";
 import { RouteLine } from "../common/RouteLine";
 import { heroContent } from "../../data/company";
 
@@ -57,12 +56,13 @@ export function Hero() {
           </div>
 
           <motion.div {...fadeUp(0.2)} className="lg:col-span-5">
-            <PlaceholderImage
-              label="Grand Route operations, Musaffah"
-              aspect="aspect-[4/5]"
-              tone="dark"
-              className="lg:mt-4"
-            />
+            <div className="aspect-[4/5] w-full overflow-hidden border border-hairline-dark bg-charcoal-soft lg:mt-4">
+              <img
+                src="/images/projects/ductwork-installation/duct-01.jpg"
+                alt="Grand Route ductwork installation, Abu Dhabi"
+                className="h-full w-full object-cover"
+              />
+            </div>
           </motion.div>
         </div>
 

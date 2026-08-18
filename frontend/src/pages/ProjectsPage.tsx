@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import { useSeo } from "../hooks/useSeo";
 import { PageHeader } from "../components/common/PageHeader";
 import { Container } from "../components/common/Container";
@@ -88,24 +89,40 @@ export function ProjectsPage() {
               </div>
             </Reveal>
           ) : (
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project) => (
-                <div key={project.slug}>
+            <div className="flex flex-col gap-16">
+              {projects.map((project, pIndex) => (
+                <Reveal key={project.slug} delay={pIndex * 0.08} className="border-t border-hairline pt-10">
+                  <h3 className="font-display text-xl font-semibold text-ink">{project.title}</h3>
+                  <p className="mt-1 font-body text-sm text-ink-muted">{project.location}</p>
+                  <p className="mt-3 max-w-2xl font-body text-[15px] leading-relaxed text-ink-muted">
+                    {project.description}
+                  </p>
+
                   {project.images.length > 0 ? (
-                    <div className="aspect-[4/3] w-full overflow-hidden border border-hairline bg-light-gray">
-                      <img
-                        src={project.images[0]}
-                        alt={project.title}
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                      />
+                    <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                      {project.images.map((src, i) => (
+                        <motion.div
+                          key={src}
+                          className="aspect-[4/3] w-full overflow-hidden border border-hairline bg-light-gray"
+                          initial={{ opacity: 0, y: 16 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: "-40px" }}
+                          whileHover={{ y: -4 }}
+                          transition={{ duration: 0.4, delay: i * 0.05, ease: [0.22, 0.61, 0.36, 1] }}
+                        >
+                          <img
+                            src={src}
+                            alt={`${project.title} ${i + 1}`}
+                            className="h-full w-full object-cover transition-transform duration-500 ease-[var(--ease-grp)] hover:scale-[1.05]"
+                            loading="lazy"
+                          />
+                        </motion.div>
+                      ))}
                     </div>
                   ) : (
-                    <PlaceholderImage label={project.title} aspect="aspect-[4/3]" />
+                    <PlaceholderImage label={project.title} aspect="aspect-[16/6]" className="mt-6" />
                   )}
-                  <h3 className="mt-4 font-display text-lg font-semibold text-ink">{project.title}</h3>
-                  <p className="mt-1 font-body text-sm text-ink-muted">{project.location}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           )}

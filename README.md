@@ -1,55 +1,52 @@
-# Grand Route
+# Grand Route — image & UI update
 
-Production website for Grand Route Transport and General Maintenance
-L.L.C - S.P.C, a Musaffah, Abu Dhabi-based transportation, maintenance, and
-heavy equipment rental company.
+Unzip this and copy `frontend/` on top of your repo's `frontend/` folder,
+overwriting the files listed below. Then commit and push yourself (I don't
+have push access to your GitHub).
 
-## Structure
+## Files this changes/adds
 
-```
-grand-route/
-├── frontend/     # React + Vite + TypeScript site (see frontend/README.md)
-├── backend/      # FastAPI service — quote requests (see backend/README.md)
-└── docs/         # Source-of-truth project documentation
-```
+New images (compressed, ~768KB total for all 9):
+- frontend/public/images/fleet/skid-steer-loader.jpg
+- frontend/public/images/fleet/backhoe-loader-3cx.jpg
+- frontend/public/images/projects/ductwork-installation/duct-01.jpg
+- frontend/public/images/projects/ductwork-installation/duct-02.jpg
+- frontend/public/images/projects/ductwork-installation/duct-03.jpg
+- frontend/public/images/projects/villa-flooring-paving/floor-01.jpg
+- frontend/public/images/projects/villa-flooring-paving/floor-02.jpg
+- frontend/public/images/projects/villa-flooring-paving/floor-03.jpg
+- frontend/public/images/projects/villa-flooring-paving/floor-04.jpg
 
-## Status
+Data (adds `image` fields, removes Light Trucks / Passenger Buses categories):
+- frontend/src/data/fleet.ts
+- frontend/src/data/services.ts
+- frontend/src/data/projects.ts (unchanged from last time, included for completeness)
 
-The frontend is a complete, production-built brochure site covering every
-route in `docs/PAGES.md`. The backend is a FastAPI service implementing
-`POST /api/v1/quotes` per `docs/API.md` — it validates, persists, and emails
-the office on every quote request. Fleet and Projects still run on local
-frontend mock data; only the quote form talks to a real backend so far.
+Types (adds optional `image?: string` to Capability, Service, FleetCategory):
+- frontend/src/types/index.ts
 
-Wiring the frontend to the backend is one environment variable
-(`VITE_API_BASE_URL`) — see `docs/DEPLOYMENT.md` for the full Render +
-Vercel deployment walkthrough.
+Components (real photos + hover animations):
+- frontend/src/components/fleet/FleetCategoryCard.tsx
+- frontend/src/components/fleet/FleetItemCard.tsx
+- frontend/src/components/services/ServicePanel.tsx
+- frontend/src/components/sections/CoreCapabilities.tsx
+- frontend/src/components/sections/Hero.tsx
+- frontend/src/components/navigation/Navbar.tsx (active-tab highlight)
 
-## Content honesty
+Pages:
+- frontend/src/pages/FleetPage.tsx (single category, no more 3-col empty grid)
+- frontend/src/pages/ProjectsPage.tsx (THE ACTUAL FIX — now shows every image
+  per project, not just the first one)
+- frontend/src/pages/ServiceDetailPage.tsx
+- frontend/src/pages/AboutPage.tsx (real photo instead of a fabricated "team" placeholder)
 
-Every fact on the site traces back to the supplied UAE economic licence.
-No client names, project names, statistics, certifications, or fleet
-specifications have been invented — see `docs/CONTENT.md` for the source
-facts and `frontend/README.md` for where they live in code.
+## Verified
 
-## Getting started
+`npx tsc --noEmit -p tsconfig.app.json` — clean
+`npm run build` — clean
 
-```bash
-# Frontend
-cd frontend
-npm install
-npm run dev
+## Note on the last delivery
 
-# Backend (separate terminal)
-cd backend
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-uvicorn app.main:app --reload
-```
-
-With no `.env` changes, the backend saves quote requests to a local SQLite
-file and skips email sending (logs instead) — enough to develop against.
-
-See `frontend/README.md` and `backend/README.md` for full command lists
-and project layout, and `docs/DEPLOYMENT.md` for shipping to production.
+The previous zip's ProjectsPage.tsx only rendered `project.images[0]`. That's
+why applying it changed nothing you could see beyond 2 thumbnails. This
+version renders the full `images[]` array per project.

@@ -67,7 +67,18 @@ export function ServiceDetailPage() {
 
             <div className="lg:col-span-5">
               <Reveal delay={0.05}>
-                <PlaceholderImage label={`${service.title} — GRP`} aspect="aspect-[4/5]" />
+                {service.image ? (
+                  <div className="aspect-[4/5] w-full overflow-hidden border border-hairline bg-light-gray">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                ) : (
+                  <PlaceholderImage label={`${service.title} — GRP`} aspect="aspect-[4/5]" />
+                )}
               </Reveal>
             </div>
           </div>

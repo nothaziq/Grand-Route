@@ -8,19 +8,10 @@ import type { FleetCategory, FleetItem } from "../types";
  */
 export const fleetCategories: FleetCategory[] = [
   {
-    id: "light-trucks",
-    title: "Light Trucks",
-    description: "Vehicles used for material transportation between sites and suppliers.",
-  },
-  {
-    id: "passenger-buses",
-    title: "Passenger Buses",
-    description: "Rented buses used for workforce and passenger transportation.",
-  },
-  {
     id: "heavy-machinery",
     title: "Heavy Machinery",
     description: "Equipment available for rental to support construction and industrial operations.",
+    image: "/images/fleet/backhoe-loader-3cx.jpg",
   },
 ];
 

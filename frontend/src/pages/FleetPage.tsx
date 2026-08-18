@@ -10,8 +10,7 @@ import { fleetCategories, fleetItems } from "../data/fleet";
 export function FleetPage() {
   useSeo({
     title: "Fleet & Equipment",
-    description:
-      "Light trucks, passenger buses, and heavy machinery available through Grand Route Transport & General Maintenance.",
+    description: "Heavy machinery available for rental through Grand Route Transport & General Maintenance.",
     path: "/fleet",
   });
 
@@ -19,13 +18,13 @@ export function FleetPage() {
     <>
       <PageHeader
         eyebrow="Fleet & Equipment"
-        title="Vehicles and machinery for the job at hand."
-        description="Categories are established below; individual listings are published as inventory is confirmed."
+        title="Heavy machinery for the job at hand."
+        description="Individual listings are published as inventory is confirmed."
       />
 
       <section className="bg-off-white py-20 sm:py-24">
         <Container>
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-10 sm:max-w-sm">
             {fleetCategories.map((category, i) => (
               <Reveal key={category.id} delay={i * 0.08}>
                 <FleetCategoryCard category={category} />

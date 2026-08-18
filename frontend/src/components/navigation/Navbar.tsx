@@ -62,20 +62,29 @@ export function Navbar() {
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
-            {NAV_LINKS.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                className={({ isActive }) =>
-                  cn(
-                    "font-body text-[13px] font-semibold uppercase tracking-[0.06em] text-off-white/75 transition-colors hover:text-off-white",
+            {NAV_LINKS.map((link) => {
+              const isActive =
+                location.pathname === link.to || location.pathname.startsWith(`${link.to}/`);
+              return (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  className={cn(
+                    "relative py-1 font-body text-[13px] font-semibold uppercase tracking-[0.06em] text-off-white/75 transition-colors hover:text-off-white",
                     isActive && "text-grp-green hover:text-grp-green",
-                  )
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
+                  )}
+                >
+                  {link.label}
+                  {isActive ? (
+                    <motion.span
+                      layoutId="nav-active-underline"
+                      className="absolute inset-x-0 -bottom-1.5 h-[2px] bg-grp-green"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  ) : null}
+                </NavLink>
+              );
+            })}
           </nav>
 
           <div className="hidden lg:block">
@@ -124,12 +133,23 @@ export function Navbar() {
                       to={link.to}
                       className={({ isActive }) =>
                         cn(
-                          "block py-4 font-display text-2xl font-semibold text-off-white/90",
+                          "relative block py-4 pl-4 font-display text-2xl font-semibold text-off-white/90 transition-colors",
                           isActive && "text-grp-green",
                         )
                       }
                     >
-                      {link.label}
+                      {({ isActive }) => (
+                        <>
+                          {isActive ? (
+                            <motion.span
+                              layoutId="nav-active-bar-mobile"
+                              className="absolute inset-y-2 left-0 w-[3px] bg-grp-green"
+                              transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                            />
+                          ) : null}
+                          {link.label}
+                        </>
+                      )}
                     </NavLink>
                   </motion.li>
                 ))}

@@ -25,11 +25,22 @@ export function CoreCapabilities() {
                 to={`/services#${cap.id}`}
                 className="group flex h-full flex-col"
               >
-                <PlaceholderImage
-                  label={`${cap.title} — GRP`}
-                  aspect="aspect-[5/4]"
-                  className="transition-transform duration-500 ease-[var(--ease-grp)] group-hover:scale-[1.02]"
-                />
+                {cap.image ? (
+                  <div className="aspect-[5/4] w-full overflow-hidden border border-hairline bg-light-gray transition-shadow duration-300 group-hover:shadow-lg">
+                    <img
+                      src={cap.image}
+                      alt={`${cap.title} — GRP`}
+                      className="h-full w-full object-cover transition-transform duration-500 ease-[var(--ease-grp)] group-hover:scale-[1.05]"
+                      loading="lazy"
+                    />
+                  </div>
+                ) : (
+                  <PlaceholderImage
+                    label={`${cap.title} — GRP`}
+                    aspect="aspect-[5/4]"
+                    className="transition-transform duration-500 ease-[var(--ease-grp)] group-hover:scale-[1.02]"
+                  />
+                )}
                 <div className="mt-6 flex items-start justify-between gap-4">
                   <div>
                     <span className="font-display text-sm font-semibold text-grp-green">{cap.number}</span>
