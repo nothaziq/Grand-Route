@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Color tokens ---- */
+  --color-grp-green: #1b9b68;
+  --color-grp-green-dark: #147a52;
+  --color-grp-burgundy: #a64055;
+  --color-grp-burgundy-dark: #833243;
+  --color-charcoal: #161817;
+  --color-charcoal-soft: #21231f;
+  --color-ink: #1c1e1b;
+  --color-ink-muted: #55584f;
+  --color-off-white: #f5f4ef;
+  --color-light-gray: #e7e7e2;
+  --color-hairline: #d6d5cc;
+  --color-hairline-dark: #3a3c37;
+
+  /* ---- Type ---- */
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Manrope", "Helvetica Neue", Arial, sans-serif;
+
+  /* ---- Layout ---- */
+  --container-page: 1360px;
+  --container-narrow: 900px;
+
+  /* ---- Radius (docs: 0-12px, mostly square) ---- */
+  --radius-token-sm: 2px;
+  --radius-token-md: 4px;
+
+  /* ---- Easing ---- */
+  --ease-grp: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-hairline);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-off-white);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-feature-settings: "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: var(--color-grp-green);
+    color: var(--color-off-white);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-grp-green);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Waybill-style corner ticks: a literal reference to a consignment
+     note / manifest stamp, used sparingly as the site's signature
+     structural device. */
+  .manifest-corners {
+    position: relative;
+  }
+  .manifest-corners::before,
+  .manifest-corners::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+  }
+  .manifest-corners::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1.5px solid currentColor;
+    border-left: 1.5px solid currentColor;
+  }
+  .manifest-corners::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}

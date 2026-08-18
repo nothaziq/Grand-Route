@@ -1,0 +1,121 @@
+import type { Capability, Service } from "../types";
+
+export const capabilities: Capability[] = [
+  {
+    id: "transportation",
+    number: "01",
+    title: "Transportation",
+    summary: "Moving materials and people where operations require them.",
+    serviceSlugs: ["material-transport", "passenger-transport"],
+  },
+  {
+    id: "maintenance",
+    number: "02",
+    title: "Maintenance",
+    summary: "Keeping buildings and electromechanical systems running.",
+    serviceSlugs: ["building-maintenance", "electromechanical"],
+  },
+  {
+    id: "equipment",
+    number: "03",
+    title: "Equipment",
+    summary: "Heavy machinery and equipment available for rental.",
+    serviceSlugs: ["heavy-equipment"],
+  },
+];
+
+export const services: Service[] = [
+  {
+    slug: "material-transport",
+    number: "01",
+    title: "Material Transportation",
+    shortTitle: "Material Transport",
+    shortDescription: "Transport of materials by light trucks.",
+    description:
+      "Grand Route transports materials by light truck in support of business and site operations across Abu Dhabi. This licensed activity covers the movement of goods and materials between sites, suppliers, and project locations.",
+    applications: [
+      "Site-to-site material movement",
+      "Supplier collection and delivery",
+      "Scheduled or on-request transport runs",
+    ],
+    capability: "transportation",
+    relatedSlugs: ["passenger-transport", "heavy-equipment"],
+  },
+  {
+    slug: "passenger-transport",
+    number: "02",
+    title: "Passenger Transportation",
+    shortTitle: "Passenger Transport",
+    shortDescription: "Passenger transportation via rented buses.",
+    description:
+      "Grand Route provides passenger transportation using rented buses, supporting the movement of personnel and workforce groups for business operations in and around Abu Dhabi.",
+    applications: [
+      "Workforce transportation",
+      "Staff shuttle arrangements",
+      "Group movement for business operations",
+    ],
+    capability: "transportation",
+    relatedSlugs: ["material-transport", "building-maintenance"],
+  },
+  {
+    slug: "building-maintenance",
+    number: "03",
+    title: "Building Maintenance",
+    shortTitle: "Building Maintenance",
+    shortDescription: "Building maintenance services.",
+    description:
+      "Grand Route carries out building maintenance for commercial and operational properties, supporting the upkeep of facilities as a licensed activity.",
+    applications: [
+      "General facility upkeep",
+      "Ongoing maintenance support",
+      "Maintenance coordinated around active operations",
+    ],
+    capability: "maintenance",
+    relatedSlugs: ["electromechanical", "passenger-transport"],
+  },
+  {
+    slug: "electromechanical",
+    number: "04",
+    title: "Electromechanical Services",
+    shortTitle: "Electromechanical",
+    shortDescription: "Electromechanical equipment installation and maintenance.",
+    description:
+      "Grand Route installs and maintains electromechanical equipment as part of its licensed activities, supporting the electromechanical systems that keep facilities and operations running.",
+    applications: [
+      "Electromechanical equipment installation",
+      "Ongoing electromechanical maintenance",
+      "Support for facility operational systems",
+    ],
+    capability: "maintenance",
+    relatedSlugs: ["building-maintenance", "heavy-equipment"],
+  },
+  {
+    slug: "heavy-equipment",
+    number: "05",
+    title: "Heavy Equipment Rental",
+    shortTitle: "Heavy Equipment",
+    shortDescription: "Heavy machines and equipment renting.",
+    description:
+      "Grand Route rents heavy machines and equipment in support of construction, industrial, and operational requirements across Abu Dhabi.",
+    applications: [
+      "Construction site equipment needs",
+      "Industrial operations support",
+      "Short and longer-term equipment rental",
+    ],
+    capability: "equipment",
+    relatedSlugs: ["material-transport", "electromechanical"],
+  },
+];
+
+export const quoteServiceOptions: { value: Service["slug"]; label: string }[] = services.map((s) => ({
+  value: s.slug,
+  label: s.title,
+}));
+
+export function getServiceBySlug(slug: string): Service | undefined {
+  return services.find((s) => s.slug === slug);
+}
+
+export function getCapabilityById(id: Service["capability"]): Capability | undefined {
+  return capabilities.find((c) => c.id === id);
+}
