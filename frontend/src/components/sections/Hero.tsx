@@ -20,7 +20,7 @@ export function Hero() {
         };
 
   return (
-    <section className="relative overflow-hidden bg-charcoal pb-20 pt-36 sm:pb-24 sm:pt-40">
+    <section className="relative overflow-hidden bg-charcoal pb-20 pt-36 sm:pb-24 sm:pt-44">
       <Container>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-7">

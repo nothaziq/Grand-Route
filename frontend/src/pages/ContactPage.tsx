@@ -3,6 +3,7 @@ import { PageHeader } from "../components/common/PageHeader";
 import { Container } from "../components/common/Container";
 import { Reveal } from "../components/common/Reveal";
 import { ContactCta } from "../components/common/ContactCta";
+import { LeadershipContacts } from "../components/common/LeadershipContacts";
 import { Button } from "../components/common/Button";
 import { company } from "../data/company";
 
@@ -41,6 +42,14 @@ export function ContactPage() {
               </Reveal>
               <Reveal delay={0.08} className="mt-8">
                 <ContactCta />
+              </Reveal>
+              <Reveal delay={0.12} className="mt-10">
+                <h3 className="font-body text-[11px] font-bold uppercase tracking-[0.14em] text-ink-muted">
+                  Speak with an owner directly
+                </h3>
+                <div className="mt-4">
+                  <LeadershipContacts />
+                </div>
               </Reveal>
             </div>
 

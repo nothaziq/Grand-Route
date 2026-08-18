@@ -4,6 +4,7 @@ import { Container } from "../components/common/Container";
 import { Reveal } from "../components/common/Reveal";
 import { PlaceholderImage } from "../components/common/PlaceholderImage";
 import { Button } from "../components/common/Button";
+import { LeadershipContacts } from "../components/common/LeadershipContacts";
 import { company, companySnapshot } from "../data/company";
 import { capabilities } from "../data/services";
 
@@ -67,6 +68,18 @@ export function AboutPage() {
               </Reveal>
 
               <Reveal delay={0.15} className="mt-14">
+                <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">
+                  Leadership
+                </h2>
+                <p className="mt-3 max-w-xl font-body text-[15px] leading-relaxed text-ink-muted">
+                  Reach either owner directly for quotes, scheduling, or general enquiries.
+                </p>
+                <div className="mt-6">
+                  <LeadershipContacts />
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.2} className="mt-14">
                 <Button to="/request-quote" variant="primary">
                   Request a Quote
                 </Button>

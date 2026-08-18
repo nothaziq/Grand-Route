@@ -20,6 +20,7 @@ export function HomePage() {
   return (
     <>
       <Hero />
+      <ContactSection />
       <CoreCapabilities />
       <CompanySnapshot />
       <ServicesSection />
@@ -27,7 +28,6 @@ export function HomePage() {
       <IndustriesSection />
       <WhyGrandRoute />
       <QuoteCta />
-      <ContactSection />
     </>
   );
 }

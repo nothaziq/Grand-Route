@@ -12,7 +12,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ eyebrow, title, description, children }: PageHeaderProps) {
   return (
-    <header className="bg-charcoal pt-32 pb-16 sm:pt-36 sm:pb-20">
+    <header className="bg-charcoal pt-32 pb-16 sm:pt-40 sm:pb-20">
       <Container>
         <ManifestTag tone="dark" className="text-grp-green">
           {eyebrow}

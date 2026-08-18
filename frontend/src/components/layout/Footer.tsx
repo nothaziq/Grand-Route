@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { Container } from "../common/Container";
 import { services } from "../../data/services";
-import { company } from "../../data/company";
+import { company, leadership } from "../../data/company";
 import logo from "../../assets/logo.png";
 
 const NAV_LINKS = [
@@ -79,12 +79,22 @@ export function Footer() {
               <MapPin className="mt-0.5 size-4 shrink-0 text-grp-green" aria-hidden="true" />
               <span>{company.location}, {company.country}</span>
             </li>
-            <li className="flex items-center gap-2.5">
-              <Phone className="size-4 shrink-0 text-grp-green" aria-hidden="true" />
-              <a href={`tel:${company.phone}`} className="transition-colors hover:text-grp-green">
-                {company.phoneDisplay}
-              </a>
-            </li>
+            {leadership.map((person) => (
+              <li key={person.name} className="flex items-start gap-2.5">
+                <Phone className="mt-0.5 size-4 shrink-0 text-grp-green" aria-hidden="true" />
+                <span className="flex min-w-0 flex-col">
+                  <span className="text-off-white/50">
+                    {person.name} · {person.title}
+                  </span>
+                  <a
+                    href={`tel:${person.phone}`}
+                    className="break-words transition-colors hover:text-grp-green"
+                  >
+                    {person.phoneDisplay}
+                  </a>
+                </span>
+              </li>
+            ))}
             <li className="flex items-center gap-2.5">
               <Mail className="size-4 shrink-0 text-grp-green" aria-hidden="true" />
               <a href={`mailto:${company.email}`} className="break-all transition-colors hover:text-grp-green">

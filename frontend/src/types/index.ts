@@ -18,6 +18,14 @@ export interface CompanyInfo {
   whatsappNumber: string; // digits only, international format
 }
 
+export interface LeadershipContact {
+  name: string;
+  title: string;
+  phone: string; // digits only, e.g. +9715...
+  phoneDisplay: string;
+  whatsappNumber: string; // digits only, international format
+}
+
 export type CapabilityId = "transportation" | "maintenance" | "equipment";
 
 export interface Capability {

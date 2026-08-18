@@ -49,7 +49,7 @@ export function Navbar() {
       </a>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+          "fixed inset-x-0 top-0 z-50 transition-colors duration-300 sm:top-9",
           scrolled || isOpen ? "bg-charcoal/95 backdrop-blur-sm" : "bg-transparent",
         )}
       >

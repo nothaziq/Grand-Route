@@ -1,4 +1,4 @@
-import type { CompanyInfo } from "../types";
+import type { CompanyInfo, LeadershipContact } from "../types";
 
 /**
  * Source of truth: supplied UAE economic licence (see docs/CONTENT.md).
@@ -13,17 +13,34 @@ export const company: CompanyInfo = {
   establishedYear: "2025",
   licenceType: "Commercial",
   licenceCategory: "Normal",
-  location: "Musaffah, Abu Dhabi",
+  location: "Musaffah, M-37, Abu Dhabi",
   region: "Abu Dhabi",
   country: "United Arab Emirates",
   licenceNumber: "CN-5733628",
   unifiedLicenceNumber: "501-2025-200020343",
   unifiedRegistrationNumber: "101-2025-200032876",
-  email: "simpletyping.ae@gmail.com",
+  email: "grandroute.ae@gmail.com",
   phone: "+971586650434",
   phoneDisplay: "+971 58 665 0434",
   whatsappNumber: "971586650434",
 };
+
+export const leadership: LeadershipContact[] = [
+  {
+    name: "Muhammad Asad",
+    title: "General Manager",
+    phone: "+971552782572",
+    phoneDisplay: "+971 55 278 2572",
+    whatsappNumber: "971552782572",
+  },
+  {
+    name: "Ihtesham Hussain",
+    title: "Office Manager",
+    phone: "+971586650434",
+    phoneDisplay: "+971 58 665 0434",
+    whatsappNumber: "971586650434",
+  },
+];
 
 export const heroContent = {
   headline: ["Moving Materials.", "Maintaining Infrastructure."],
