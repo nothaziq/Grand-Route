@@ -4,6 +4,7 @@ import { Container } from "../components/common/Container";
 import { Reveal } from "../components/common/Reveal";
 import { Button } from "../components/common/Button";
 import { FleetCategoryCard } from "../components/fleet/FleetCategoryCard";
+import { FleetItemCard } from "../components/fleet/FleetItemCard";
 import { fleetCategories, fleetItems } from "../data/fleet";
 
 export function FleetPage() {
@@ -44,7 +45,17 @@ export function FleetPage() {
                 </Button>
               </div>
             </Reveal>
-          ) : null}
+          ) : (
+            <div className="mt-20 border-t border-hairline pt-14">
+              <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                {fleetItems.map((item, i) => (
+                  <Reveal key={item.slug} delay={i * 0.08}>
+                    <FleetItemCard item={item} />
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          )}
         </Container>
       </section>
     </>

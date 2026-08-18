@@ -91,7 +91,18 @@ export function ProjectsPage() {
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((project) => (
                 <div key={project.slug}>
-                  <PlaceholderImage label={project.title} aspect="aspect-[4/3]" />
+                  {project.images.length > 0 ? (
+                    <div className="aspect-[4/3] w-full overflow-hidden border border-hairline bg-light-gray">
+                      <img
+                        src={project.images[0]}
+                        alt={project.title}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : (
+                    <PlaceholderImage label={project.title} aspect="aspect-[4/3]" />
+                  )}
                   <h3 className="mt-4 font-display text-lg font-semibold text-ink">{project.title}</h3>
                   <p className="mt-1 font-body text-sm text-ink-muted">{project.location}</p>
                 </div>
