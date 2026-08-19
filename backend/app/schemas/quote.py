@@ -6,7 +6,6 @@ from pydantic import BaseModel, EmailStr, Field, field_validator
 
 class ServiceValue(str, Enum):
     material_transport = "material-transport"
-    passenger_transport = "passenger-transport"
     building_maintenance = "building-maintenance"
     electromechanical = "electromechanical"
     heavy_equipment = "heavy-equipment"

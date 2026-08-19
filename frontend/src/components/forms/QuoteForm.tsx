@@ -11,7 +11,6 @@ import type { SubmissionState } from "../../types";
 
 const SERVICE_VALUES = [
   "material-transport",
-  "passenger-transport",
   "building-maintenance",
   "electromechanical",
   "heavy-equipment",

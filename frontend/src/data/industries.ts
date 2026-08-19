@@ -22,11 +22,6 @@ export const industries: Industry[] = [
     description: "Transportation and equipment support for industrial facility operations.",
   },
   {
-    id: "workforce-transportation",
-    title: "Workforce Transportation",
-    description: "Bus-based passenger transportation for operational personnel.",
-  },
-  {
     id: "logistics-supply",
     title: "Logistics & Supply",
     description: "Light truck transport supporting site-to-site material movement.",

@@ -9,7 +9,7 @@ export function ServicesPage() {
   useSeo({
     title: "Services",
     description:
-      "Material transportation, passenger transportation, building maintenance, electromechanical services, and heavy equipment rental in Abu Dhabi.",
+      "Material transportation, building maintenance, electromechanical services, and heavy equipment rental in Abu Dhabi.",
     path: "/services",
   });
 
@@ -17,7 +17,7 @@ export function ServicesPage() {
     <>
       <PageHeader
         eyebrow="Services"
-        title="Five licensed activities, grouped by capability."
+        title="Four licensed activities, grouped by capability."
         description="Transportation, maintenance, and equipment — organized the way operations actually request them."
       />
 

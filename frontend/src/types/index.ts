@@ -39,7 +39,6 @@ export interface Capability {
 
 export type ServiceSlug =
   | "material-transport"
-  | "passenger-transport"
   | "building-maintenance"
   | "electromechanical"
   | "heavy-equipment";
@@ -91,7 +90,6 @@ export interface Project {
 
 export type QuoteServiceValue =
   | "material-transport"
-  | "passenger-transport"
   | "building-maintenance"
   | "electromechanical"
   | "heavy-equipment";

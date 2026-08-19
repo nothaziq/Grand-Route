@@ -19,7 +19,7 @@ export function AboutPage() {
     <>
       <PageHeader
         eyebrow="About Grand Route"
-        title="An Abu Dhabi operator built around five licensed capabilities."
+        title="An Abu Dhabi operator built around four licensed capabilities."
         description="Grand Route Transport and General Maintenance is a commercial business operating from Musaffah, Abu Dhabi."
       />
 
@@ -34,9 +34,8 @@ export function AboutPage() {
                 <p className="mt-5 max-w-xl font-body text-[15px] leading-relaxed text-ink-muted">
                   {company.legalName} was established in {company.establishedYear} and operates from{" "}
                   {company.location}, {company.country}. The company holds a {company.licenceType}{" "}
-                  licence covering five distinct activities: material transportation, passenger
-                  transportation, building maintenance, electromechanical installation and
-                  maintenance, and heavy equipment rental.
+                  licence covering material transportation, building maintenance,
+                  electromechanical installation and maintenance, and heavy equipment rental.
                 </p>
                 <p className="mt-4 max-w-xl font-body text-[15px] leading-relaxed text-ink-muted">
                   The business is structured to support operational requirements directly rather
