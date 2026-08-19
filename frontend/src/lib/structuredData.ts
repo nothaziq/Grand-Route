@@ -1,6 +1,9 @@
 import { company, leadership } from "../data/company";
 
-const SITE_URL = "https://www.grandroute.ae";
+// TODO: update alongside the matching SITE_URL constant in
+// hooks/useSeo.ts once a custom domain is purchased and DNS is
+// pointed at this site.
+const SITE_URL = "https://grand-route.vercel.app";
 
 /**
  * schema.org LocalBusiness structured data, built only from facts
