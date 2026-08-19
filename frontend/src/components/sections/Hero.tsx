@@ -2,6 +2,7 @@ import { motion, useReducedMotion, type Easing } from "motion/react";
 import { Container } from "../common/Container";
 import { Button } from "../common/Button";
 import { RouteLine } from "../common/RouteLine";
+import { LicenceBadge } from "../common/LicenceBadge";
 import { heroContent } from "../../data/company";
 
 const EASE_GRP: Easing = [0.22, 0.61, 0.36, 1];
@@ -52,6 +53,10 @@ export function Hero() {
               <Button to="/services" variant="secondary" tone="onDark">
                 {heroContent.secondaryCta}
               </Button>
+            </motion.div>
+
+            <motion.div {...fadeUp(0.5)} className="mt-8">
+              <LicenceBadge />
             </motion.div>
           </div>
 

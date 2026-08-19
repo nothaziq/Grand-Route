@@ -11,7 +11,7 @@ export const company: CompanyInfo = {
   shortName: "Grand Route",
   establishedDate: "2025-01-29",
   establishedYear: "2025",
-  licenceType: "Commercial",
+  licenceType: "Business",
   licenceCategory: "Normal",
   location: "Musaffah, M-37, Abu Dhabi",
   region: "Abu Dhabi",

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { trackPageview } from "../lib/analytics";
 
 interface SeoOptions {
   title: string;
@@ -43,5 +44,7 @@ export function useSeo({ title, description, path = "/" }: SeoOptions) {
     setMetaTag("property", "og:description", description);
     setMetaTag("property", "og:url", `${SITE_URL}${path}`);
     setCanonical(`${SITE_URL}${path}`);
+
+    trackPageview(path);
   }, [title, description, path]);
 }

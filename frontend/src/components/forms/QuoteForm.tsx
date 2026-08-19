@@ -6,6 +6,7 @@ import { CheckCircle2, AlertCircle, Paperclip } from "lucide-react";
 import { Button } from "../common/Button";
 import { quoteServiceOptions } from "../../data/services";
 import { submitQuoteRequest } from "../../lib/api/quotes";
+import { trackEvent } from "../../lib/analytics";
 import type { SubmissionState } from "../../types";
 
 const SERVICE_VALUES = [
@@ -67,6 +68,7 @@ export function QuoteForm() {
         location: values.location || undefined,
       });
       setState("success");
+      trackEvent("generate_lead", { service: values.service });
       reset();
       setFileName(null);
     } catch (err) {
