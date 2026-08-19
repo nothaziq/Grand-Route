@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import admin, quotes
+from app.api import admin, fleet, projects, quotes
 from app.core.config import get_settings
-from app.core.database import Base, engine
+from app.core.database import Base, SessionLocal, engine
+from app.core.seed import seed_if_empty
 
 settings = get_settings()
 
@@ -11,6 +12,10 @@ settings = get_settings()
 # and for a simple single-table Postgres deployment; swap for Alembic
 # migrations once the schema needs to evolve carefully.
 Base.metadata.create_all(bind=engine)
+
+# Seed projects/fleet from the original static content, once, if empty.
+with SessionLocal() as _db:
+    seed_if_empty(_db)
 
 app = FastAPI(
     title="Grand Route API",
@@ -29,6 +34,8 @@ app.add_middleware(
 
 app.include_router(quotes.router, prefix=settings.api_v1_prefix)
 app.include_router(admin.router, prefix=settings.api_v1_prefix)
+app.include_router(projects.router, prefix=settings.api_v1_prefix)
+app.include_router(fleet.router, prefix=settings.api_v1_prefix)
 
 
 @app.get("/api/v1/health")
