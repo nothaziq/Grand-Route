@@ -5,6 +5,10 @@ import { Button } from "../common/Button";
 import { ServiceGrid } from "../services/ServiceGrid";
 import { services } from "../../data/services";
 
+// Homepage teaser highlights only the services we have site photography for.
+// The full list of five licensed activities is always shown on /services.
+const featuredServices = services.filter((s) => s.image);
+
 export function ServicesSection() {
   return (
     <section id="services" className="bg-off-white py-24 sm:py-28">
@@ -13,8 +17,8 @@ export function ServicesSection() {
           <Reveal>
             <SectionHeader
               eyebrow="Licensed Activities"
-              heading="Five services, three capability groups."
-              description="Every service below reflects a licensed business activity — nothing more, nothing invented."
+              heading="Featured services, from the field."
+              description="Every service below reflects a licensed business activity — nothing more, nothing invented. See all five services and capability groups on the full list."
             />
           </Reveal>
           <Reveal delay={0.1}>
@@ -25,7 +29,7 @@ export function ServicesSection() {
         </div>
 
         <Reveal delay={0.15} className="mt-12">
-          <ServiceGrid services={services} />
+          <ServiceGrid services={featuredServices} renumber />
         </Reveal>
       </Container>
     </section>

@@ -24,7 +24,7 @@ export function FleetPreview() {
           </Reveal>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-3">
+        <div className="mt-12 max-w-sm">
           {fleetCategories.map((category, i) => (
             <Reveal key={category.id} delay={i * 0.08}>
               <FleetCategoryCard category={category} />

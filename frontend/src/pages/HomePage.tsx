@@ -3,6 +3,7 @@ import { Hero } from "../components/sections/Hero";
 import { CoreCapabilities } from "../components/sections/CoreCapabilities";
 import { CompanySnapshot } from "../components/sections/CompanySnapshot";
 import { ServicesSection } from "../components/sections/ServicesSection";
+import { ProjectsPreview } from "../components/sections/ProjectsPreview";
 import { FleetPreview } from "../components/sections/FleetPreview";
 import { IndustriesSection } from "../components/sections/IndustriesSection";
 import { WhyGrandRoute } from "../components/sections/WhyGrandRoute";
@@ -24,6 +25,7 @@ export function HomePage() {
       <CoreCapabilities />
       <CompanySnapshot />
       <ServicesSection />
+      <ProjectsPreview />
       <FleetPreview />
       <IndustriesSection />
       <WhyGrandRoute />

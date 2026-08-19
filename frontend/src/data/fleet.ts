@@ -11,7 +11,7 @@ export const fleetCategories: FleetCategory[] = [
     id: "heavy-machinery",
     title: "Heavy Machinery",
     description: "Equipment available for rental to support construction and industrial operations.",
-    image: "/images/fleet/backhoe-loader-3cx.jpg",
+    image: "/images/fleet/heavy-machinery-arm.jpg",
   },
 ];
 
@@ -28,6 +28,6 @@ export const fleetItems: FleetItem[] = [
     name: "Backhoe Loader",
     category: "heavy-machinery",
     description: "JCB 3CX backhoe loader used for excavation, loading, and general earthmoving work.",
-    image: "/images/fleet/backhoe-loader-3cx.jpg",
+    image: "/images/fleet/backhoe-loader-side.jpg",
   },
 ];

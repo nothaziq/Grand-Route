@@ -7,9 +7,10 @@ import { cn } from "../../lib/cn";
 interface ServicePanelProps {
   service: Service;
   reversed?: boolean;
+  displayNumber?: string;
 }
 
-export function ServicePanel({ service, reversed = false }: ServicePanelProps) {
+export function ServicePanel({ service, reversed = false, displayNumber }: ServicePanelProps) {
   return (
     <Link
       to={`/services/${service.slug}`}
@@ -37,7 +38,9 @@ export function ServicePanel({ service, reversed = false }: ServicePanelProps) {
         )}
       </div>
       <div className={cn("md:col-span-6", reversed && "md:order-1")}>
-        <span className="font-display text-sm font-semibold text-grp-green">{service.number}</span>
+        <span className="font-display text-sm font-semibold text-grp-green">
+          {displayNumber ?? service.number}
+        </span>
         <h3 className="mt-3 font-display text-2xl font-semibold leading-tight text-ink sm:text-3xl">
           {service.title}
         </h3>
