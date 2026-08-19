@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { trackPageview } from "../lib/analytics";
 
 interface SeoOptions {
   title: string;
@@ -8,7 +7,11 @@ interface SeoOptions {
 }
 
 const SITE_NAME = "Grand Route Transport & General Maintenance";
-const SITE_URL = "https://www.grandroute.ae";
+// TODO: update to the purchased custom domain (e.g. https://www.grandroute.ae)
+// once one is bought and DNS is pointed at this site. Until then, this must
+// match the actual live URL or canonical tags / sitemap / structured data
+// will point Google at a domain that doesn't resolve to this site.
+const SITE_URL = "https://grand-route.vercel.app";
 
 function setMetaTag(attr: "name" | "property", key: string, content: string) {
   let el = document.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
@@ -44,7 +47,5 @@ export function useSeo({ title, description, path = "/" }: SeoOptions) {
     setMetaTag("property", "og:description", description);
     setMetaTag("property", "og:url", `${SITE_URL}${path}`);
     setCanonical(`${SITE_URL}${path}`);
-
-    trackPageview(path);
   }, [title, description, path]);
 }

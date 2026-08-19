@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.grandroute.ae/sitemap.xml
+Sitemap: https://grand-route.vercel.app/sitemap.xml
