@@ -43,6 +43,7 @@ export const services: Service[] = [
     ],
     capability: "transportation",
     relatedSlugs: ["heavy-equipment", "building-maintenance"],
+    image: "/images/fleet/backhoe-loader-onsite.jpg",
   },
   {
     slug: "building-maintenance",

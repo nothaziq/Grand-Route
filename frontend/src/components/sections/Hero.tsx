@@ -63,8 +63,8 @@ export function Hero() {
           <motion.div {...fadeUp(0.2)} className="lg:col-span-5">
             <div className="aspect-[4/5] w-full overflow-hidden border border-hairline-dark bg-charcoal-soft lg:mt-4">
               <img
-                src="/images/projects/ductwork-installation/duct-01.jpg"
-                alt="Grand Route ductwork installation, Abu Dhabi"
+                src="/images/fleet/backhoe-loader-infra-work.jpg"
+                alt="Grand Route heavy equipment on site, Abu Dhabi"
                 className="h-full w-full object-cover"
               />
             </div>
