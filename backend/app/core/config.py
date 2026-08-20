@@ -29,9 +29,16 @@ class Settings(BaseSettings):
     # "https://grandroute.ae,https://www.grandroute.ae"
     cors_origins: str = "http://localhost:5173"
 
-    # --- Email notifications (SMTP) ---
-    # If smtp_host is unset, email sending is skipped (submissions are
-    # still saved to the database) — useful for local dev.
+    # --- Email notifications ---
+    # Preferred: Resend (HTTPS API, works everywhere — including hosts
+    # like Render's free tier that block raw outbound SMTP sockets).
+    # Sign up free at resend.com, grab an API key, set it here.
+    resend_api_key: str | None = None
+
+    # Fallback: plain SMTP. Works for local dev and hosts that allow
+    # outbound SMTP, but Render's free tier does NOT — connections
+    # fail with "Network is unreachable" regardless of credentials.
+    # Only used if resend_api_key is unset.
     smtp_host: str | None = None
     smtp_port: int = 587
     smtp_username: str | None = None

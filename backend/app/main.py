@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -5,6 +7,12 @@ from app.api import admin, fleet, projects, quotes
 from app.core.config import get_settings
 from app.core.database import Base, SessionLocal, engine
 from app.core.seed import seed_if_empty
+
+# Without this, only WARNING/ERROR logs reach Render's log viewer — the
+# app's own INFO-level confirmations (e.g. "sent via Resend", "skipping
+# email, not configured") are silently dropped, which makes diagnosing
+# notification issues much harder than it needs to be.
+logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 
 settings = get_settings()
 
