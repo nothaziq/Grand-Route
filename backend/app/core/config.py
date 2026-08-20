@@ -30,15 +30,23 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:5173"
 
     # --- Email notifications ---
-    # Preferred: Resend (HTTPS API, works everywhere — including hosts
+    # Preferred: Brevo (HTTPS API, works everywhere — including hosts
     # like Render's free tier that block raw outbound SMTP sockets).
-    # Sign up free at resend.com, grab an API key, set it here.
+    # Free tier verifies a single sender *address* rather than a whole
+    # domain, so it can send to any recipient without owning a domain.
+    # Sign up free at brevo.com, verify a sender email, grab an API
+    # key from Settings > SMTP & API > API Keys.
+    brevo_api_key: str | None = None
+
+    # Alternative: Resend (also HTTPS). Its free/sandbox mode can only
+    # send to the account's own signup email until a full domain is
+    # verified — fine for personal testing, not for a real inbox.
     resend_api_key: str | None = None
 
     # Fallback: plain SMTP. Works for local dev and hosts that allow
     # outbound SMTP, but Render's free tier does NOT — connections
     # fail with "Network is unreachable" regardless of credentials.
-    # Only used if resend_api_key is unset.
+    # Only used if neither brevo_api_key nor resend_api_key is set.
     smtp_host: str | None = None
     smtp_port: int = 587
     smtp_username: str | None = None
@@ -52,7 +60,7 @@ class Settings(BaseSettings):
     # expects, which EmailStr would reject too. Blank strings are
     # normalized to None below so "unset" behaves the same either way.
     notify_email: str | None = None  # where quote requests are sent
-    from_email: str | None = None  # "From" header, e.g. "Grand Route <onboarding@resend.dev>"
+    from_email: str | None = None  # e.g. "Grand Route <you@verified-sender.com>"
 
     @field_validator("notify_email", "from_email", mode="before")
     @classmethod

@@ -1,16 +1,22 @@
 """Business email notifications for new quote requests.
 
-Preferred path: Resend, an HTTPS-based email API (POST to
-api.resend.com over port 443). Used whenever RESEND_API_KEY is set.
+Preferred path: Brevo, an HTTPS-based email API. Used whenever
+BREVO_API_KEY is set. Brevo's free tier verifies a single sender
+*address* rather than a whole domain, so — unlike Resend's sandbox
+mode — it can send to any recipient without owning a domain.
 
-Fallback path: plain SMTP, used only if RESEND_API_KEY is unset. This
-exists for local development, where raw outbound SMTP usually works
-fine. It will NOT work on Render's free tier — those connections fail
-with "OSError: [Errno 101] Network is unreachable" regardless of
-credentials, because Render blocks raw outbound SMTP sockets at the
-network level on that plan. That's why Resend is the primary path.
+Second choice: Resend (also HTTPS). Used if BREVO_API_KEY is unset
+but RESEND_API_KEY is set. Resend's free/sandbox mode can only send
+to the account's own signup email until a full domain is verified.
 
-If neither is configured, sending is silently skipped: the quote is
+Fallback: plain SMTP, used only if neither API key is set. Works for
+local dev, where raw outbound SMTP usually works fine. It will NOT
+work on Render's free tier — those connections fail with "OSError:
+[Errno 101] Network is unreachable" regardless of credentials, because
+Render blocks raw outbound SMTP sockets at the network level on that
+plan. That's why the HTTPS-based providers above are tried first.
+
+If nothing is configured, sending is silently skipped: the quote is
 still saved to the database, so nothing is lost — check it via the
 /admin endpoint or the database directly.
 
@@ -20,6 +26,7 @@ the customer is waiting on. Errors are logged instead.
 
 import json
 import logging
+import re
 import smtplib
 import urllib.error
 import urllib.request
@@ -32,7 +39,29 @@ logger = logging.getLogger("grandroute.email")
 
 settings = get_settings()
 
+BREVO_API_URL = "https://api.brevo.com/v3/smtp/email"
 RESEND_API_URL = "https://api.resend.com/emails"
+
+# Without a normal-looking User-Agent, urllib's default
+# ("Python-urllib/3.x") gets blocked by the Cloudflare bot filter in
+# front of most email APIs before the request ever reaches the API
+# itself — shows up as a generic "403 error code: 1010" Cloudflare
+# page, not a provider-specific error.
+USER_AGENT = "GrandRouteBackend/1.0 (+https://grand-route.vercel.app)"
+
+_DISPLAY_NAME_RE = re.compile(r"^\s*(?:(?P<name>[^<]+)<)?(?P<email>[^<>]+?)>?\s*$")
+
+
+def _parse_from_address(raw: str | None, default_email: str, default_name: str) -> tuple[str, str]:
+    """Splits "Name <email>" or a bare email into (name, email)."""
+    if not raw:
+        return default_name, default_email
+    match = _DISPLAY_NAME_RE.match(raw)
+    if not match:
+        return default_name, raw
+    name = (match.group("name") or default_name).strip()
+    email = match.group("email").strip()
+    return name, email
 
 
 def _build_body(quote: QuoteRequest) -> str:
@@ -51,6 +80,40 @@ def _build_body(quote: QuoteRequest) -> str:
     )
 
 
+def _post_json(url: str, payload: dict, headers: dict) -> None:
+    request = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={**headers, "User-Agent": USER_AGENT},
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=10) as response:
+        if response.status >= 300:
+            raise RuntimeError(f"{url} returned status {response.status}")
+
+
+def _send_via_brevo(quote: QuoteRequest, body: str) -> None:
+    name, email = _parse_from_address(settings.from_email, "onboarding@brevo.com", "Grand Route")
+    payload: dict = {
+        "sender": {"name": name, "email": email},
+        "to": [{"email": settings.notify_email}],
+        "subject": f"New quote request — {quote.name} ({quote.service})",
+        "textContent": body,
+    }
+    if quote.email:
+        payload["replyTo"] = {"email": quote.email}
+
+    _post_json(
+        BREVO_API_URL,
+        payload,
+        headers={
+            "api-key": settings.brevo_api_key,
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+    )
+
+
 def _send_via_resend(quote: QuoteRequest, body: str) -> None:
     from_address = settings.from_email or "Grand Route <onboarding@resend.dev>"
     payload: dict = {
@@ -62,24 +125,14 @@ def _send_via_resend(quote: QuoteRequest, body: str) -> None:
     if quote.email:
         payload["reply_to"] = quote.email
 
-    request = urllib.request.Request(
+    _post_json(
         RESEND_API_URL,
-        data=json.dumps(payload).encode("utf-8"),
+        payload,
         headers={
             "Authorization": f"Bearer {settings.resend_api_key}",
             "Content-Type": "application/json",
-            # Without a normal-looking User-Agent, urllib's default
-            # ("Python-urllib/3.x") gets blocked by Cloudflare's bot
-            # filter in front of Resend's API before the request ever
-            # reaches Resend — shows up as a generic "403 error code:
-            # 1010" Cloudflare page, not a Resend-specific error.
-            "User-Agent": "GrandRouteBackend/1.0 (+https://grand-route.vercel.app)",
         },
-        method="POST",
     )
-    with urllib.request.urlopen(request, timeout=10) as response:
-        if response.status >= 300:
-            raise RuntimeError(f"Resend API returned status {response.status}")
 
 
 def _send_via_smtp(quote: QuoteRequest, body: str) -> None:
@@ -107,7 +160,10 @@ def send_quote_notification(quote: QuoteRequest) -> None:
     body = _build_body(quote)
 
     try:
-        if settings.resend_api_key:
+        if settings.brevo_api_key:
+            _send_via_brevo(quote, body)
+            logger.info("Sent quote notification email via Brevo for %s", quote.id)
+        elif settings.resend_api_key:
             _send_via_resend(quote, body)
             logger.info("Sent quote notification email via Resend for %s", quote.id)
         elif settings.smtp_host:
@@ -115,13 +171,12 @@ def send_quote_notification(quote: QuoteRequest) -> None:
             logger.info("Sent quote notification email via SMTP for %s", quote.id)
         else:
             logger.info(
-                "Neither RESEND_API_KEY nor SMTP_HOST configured — skipping email for quote %s",
+                "No email provider configured (BREVO_API_KEY / RESEND_API_KEY / SMTP_HOST) "
+                "— skipping email for quote %s",
                 quote.id,
             )
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")
-        logger.error(
-            "Resend API rejected the notification for %s: %s %s", quote.id, exc.code, detail
-        )
+        logger.error("Email provider rejected the notification for %s: %s %s", quote.id, exc.code, detail)
     except Exception:
         logger.exception("Failed to send quote notification email for %s", quote.id)
