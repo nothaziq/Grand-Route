@@ -68,6 +68,12 @@ def _send_via_resend(quote: QuoteRequest, body: str) -> None:
         headers={
             "Authorization": f"Bearer {settings.resend_api_key}",
             "Content-Type": "application/json",
+            # Without a normal-looking User-Agent, urllib's default
+            # ("Python-urllib/3.x") gets blocked by Cloudflare's bot
+            # filter in front of Resend's API before the request ever
+            # reaches Resend — shows up as a generic "403 error code:
+            # 1010" Cloudflare page, not a Resend-specific error.
+            "User-Agent": "GrandRouteBackend/1.0 (+https://grand-route.vercel.app)",
         },
         method="POST",
     )
