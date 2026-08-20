@@ -7,7 +7,7 @@ list of variables a deployment must set.
 
 from functools import lru_cache
 
-from pydantic import EmailStr
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -44,8 +44,23 @@ class Settings(BaseSettings):
     smtp_username: str | None = None
     smtp_password: str | None = None
     smtp_use_tls: bool = True
-    notify_email: EmailStr | None = None  # where quote requests are sent
-    from_email: EmailStr | None = None  # "From" address on outgoing mail
+
+    # Plain str, not EmailStr: hosting dashboards often leave an env
+    # var "set" to an empty string rather than truly unset, and
+    # EmailStr rejects "" outright (crashes startup). Also, from_email
+    # legitimately needs the "Display Name <address>" format Resend
+    # expects, which EmailStr would reject too. Blank strings are
+    # normalized to None below so "unset" behaves the same either way.
+    notify_email: str | None = None  # where quote requests are sent
+    from_email: str | None = None  # "From" header, e.g. "Grand Route <onboarding@resend.dev>"
+
+    @field_validator("notify_email", "from_email", mode="before")
+    @classmethod
+    def _blank_to_none(cls, value: str | None) -> str | None:
+        if value is None:
+            return None
+        stripped = value.strip()
+        return stripped or None
 
     # --- Rate limiting ---
     rate_limit_per_minute: int = 5
